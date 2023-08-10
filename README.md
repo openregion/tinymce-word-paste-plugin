@@ -1,0 +1,1 @@
+# tinymce-word-paste-plugin
