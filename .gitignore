@@ -1,0 +1,10 @@
+# ide
+.idea/
+.vscode/
+
+# mac
+.DS_Store
+
+# local
+/dist
+/node_modules

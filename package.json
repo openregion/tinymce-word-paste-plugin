@@ -1,0 +1,51 @@
+{
+  "name": "@openregion/tinymce-word-paste-plugin",
+  "version": "1.0.0",
+  "description": "TinyMCE 6 plugin to paste from Word",
+  "type": "commonjs",
+  "main": "./dist/index.umd.js",
+  "umd:main": "./dist/index.umd.js",
+  "unpkg": "./dist/browser.umd.js",
+  "module": "./dist/index.esm.js",
+	"types": "./dist/types/index.d.ts",
+  "source": "src/index.ts",
+  "exports": {
+		"types": "./dist/types/index.d.ts",
+    "import": "./dist/index.module.js",
+    "browser": "./dist/browser.umd.js",
+    "require": "./dist/index.umd.js",
+    "default": "./dist/index.umd.js"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build:node": "microbundle src/index.ts --target node --format esm && microbundle src/index.ts --target node --format umd",
+    "build:browser": "microbundle src/index.ts --target web --format umd,modern --output dist/browser.js",
+    "build": "npm run build:node && npm run build:browser",
+		"release": "npm run build && np"
+	},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/openregion/tinymce-word-paste-plugin.git"
+  },
+  "keywords": [
+    "tinymce",
+    "plugin",
+    "paste",
+    "word"
+  ],
+  "license": "LGPL-2.1",
+  "bugs": {
+    "url": "https://github.com/openregion/tinymce-word-paste-plugin/issues"
+  },
+  "homepage": "https://github.com/openregion/tinymce-word-paste-plugin#readme",
+  "devDependencies": {
+    "microbundle": "^0.15.1",
+		"np": "^8.0.4",
+    "typescript": "^5.1.6"
+  },
+  "peerDependencies": {
+    "tinymce": "^6.2.0"
+  }
+}
