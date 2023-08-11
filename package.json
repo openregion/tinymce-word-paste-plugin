@@ -6,7 +6,7 @@
   "main": "./dist/index.umd.js",
   "umd:main": "./dist/index.umd.js",
   "unpkg": "./dist/browser.umd.js",
-  "module": "./dist/index.esm.js",
+  "module": "./dist/index.module.js",
 	"types": "./dist/types/index.d.ts",
   "source": "src/index.ts",
   "exports": {
