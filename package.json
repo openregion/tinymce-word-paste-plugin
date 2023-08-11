@@ -1,6 +1,6 @@
 {
   "name": "@openregion/tinymce-word-paste-plugin",
-  "version": "1.0.0",
+  "version": "1.0.3",
   "description": "TinyMCE 6 plugin to paste from Word",
   "type": "commonjs",
   "main": "./dist/index.umd.js",
