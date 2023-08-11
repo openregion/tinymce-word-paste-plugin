@@ -9,7 +9,6 @@
  * @see https://github.com/tinymce/tinymce/blob/5.10.7/modules/tinymce/src/plugins/paste/main/ts/core/Utils.ts
  */
 
-import tinymce from 'tinymce';
 const { Tools } = tinymce.util;
 
 type RegExpFilter =

@@ -14,7 +14,7 @@
  * @see https://www.tiny.cloud/docs/tinymce/6/copy-and-paste/
  */
 
-import { Editor } from 'tinymce';
+import type { Editor } from 'tinymce';
 
 const getRetainStyleProps = (editor: Editor): string | undefined =>
   editor.getParam('paste_retain_style_properties');

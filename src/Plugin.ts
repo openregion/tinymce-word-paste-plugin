@@ -1,4 +1,3 @@
-import tinymce from 'tinymce';
 import { isWordContent, preProcess } from './core/WordFilter';
 
 export default (): void => {

@@ -20,8 +20,8 @@
     "dist"
   ],
   "scripts": {
-    "build:node": "microbundle src/index.ts --target node --format esm && microbundle src/index.ts --target node --format umd",
-    "build:browser": "microbundle src/index.ts --target web --format umd,modern --output dist/browser.js",
+    "build:node": "microbundle src/index.ts --target node --format esm && microbundle src/index.ts --target node --format umd --external tinymce",
+    "build:browser": "microbundle src/index.ts --target web --format umd,modern --output dist/browser.js --external tinymce",
     "build": "npm run build:node && npm run build:browser",
 		"release": "npm run build && np"
 	},
@@ -43,9 +43,7 @@
   "devDependencies": {
     "microbundle": "^0.15.1",
 		"np": "^8.0.4",
+		"tinymce": "^6.2.0",
     "typescript": "^5.1.6"
-  },
-  "peerDependencies": {
-    "tinymce": "^6.2.0"
   }
 }

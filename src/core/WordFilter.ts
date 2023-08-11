@@ -9,8 +9,7 @@
  * @see https://github.com/tinymce/tinymce/blob/5.10.7/modules/tinymce/src/plugins/paste/main/ts/core/WordFilter.ts
  */
 
-import type { AstNode as AstNodeType } from 'tinymce';
-import tinymce, { Editor } from 'tinymce';
+import type { AstNode as AstNodeType, Editor } from 'tinymce';
 
 import * as Settings from '../api/Settings';
 import * as Utils from './Utils';
