@@ -1,7 +1,7 @@
 {
   "name": "@openregion/tinymce-word-paste-plugin",
-  "version": "1.0.3",
-  "description": "TinyMCE 6 plugin to paste from Word",
+  "version": "1.0.4",
+  "description": "TinyMCE plugin to paste from Word",
   "type": "commonjs",
   "main": "./dist/index.umd.js",
   "umd:main": "./dist/index.umd.js",
@@ -43,7 +43,7 @@
   "devDependencies": {
     "microbundle": "^0.15.1",
 		"np": "^8.0.4",
-		"tinymce": "^6.2.0",
+		"tinymce": "^6.2.0 || ^7.0.0",
     "typescript": "^5.1.6"
   }
 }
