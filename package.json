@@ -6,13 +6,17 @@
   "main": "./dist/index.umd.js",
   "umd:main": "./dist/index.umd.js",
   "unpkg": "./dist/browser.umd.js",
-  "module": "./dist/index.module.js",
+  "module": "./dist/index.module.mjs",
   "types": "./dist/types/index.d.ts",
   "source": "src/index.ts",
   "exports": {
     "types": "./dist/types/index.d.ts",
-    "import": "./dist/index.module.js",
-    "browser": "./dist/browser.umd.js",
+    "browser": {
+      "import": "./dist/browser.module.mjs",
+      "require": "./dist/browser.umd.js",
+      "default": "./dist/browser.umd.js"
+    },
+    "import": "./dist/index.module.mjs",
     "require": "./dist/index.umd.js",
     "default": "./dist/index.umd.js"
   },
@@ -23,7 +27,8 @@
     "build:node": "rollup --config --configTarget node",
     "build:browser": "rollup --config --configTarget browser",
     "build": "rollup --config",
-    "release": "npm run build && npm publish"
+    "prepack": "npm run build",
+    "release": "npm publish"
   },
   "repository": {
     "type": "git",
