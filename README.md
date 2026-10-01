@@ -1,7 +1,7 @@
 # TinyMCE Word Paste Plugin
 This plugin provides the capability to accept data from Microsoft Word, and clean-up the received data before pasting it into place.
 
-Tested on TinyMCE 6/7.
+Tested on TinyMCE 6/7/8.
 
 Based on [TinyMCE 5.10.7 paste plugin](https://github.com/tinymce/tinymce/tree/5.10.7/modules/tinymce/src/plugins/paste/main/ts).
 
