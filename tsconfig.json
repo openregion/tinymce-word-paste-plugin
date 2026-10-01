@@ -2,24 +2,28 @@
   "compilerOptions": {
     "strict": true,
     "lib": [
-			"es2022",
-			"dom"
-		],
+      "es2022",
+      "dom"
+    ],
     "target": "esnext",
     "module": "esnext",
-    "moduleResolution": "NodeNext",
+    "moduleResolution": "Bundler",
+    "rootDir": "src",
     "forceConsistentCasingInFileNames": true,
     "skipLibCheck": true,
     "declaration": true,
     "declarationMap": true,
-		"declarationDir": "dist/types",
+    "sourceMap": true,
+    "inlineSources": true,
+    "noEmitOnError": true,
+    "declarationDir": "dist/types",
     "outDir": "dist",
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "esModuleInterop": true
   },
   "files": [
-		"src/index.ts",
-		"src/global.d.ts"
-	]
+    "src/index.ts",
+    "src/global.d.ts"
+  ]
 }

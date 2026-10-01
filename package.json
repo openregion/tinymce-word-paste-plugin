@@ -7,10 +7,10 @@
   "umd:main": "./dist/index.umd.js",
   "unpkg": "./dist/browser.umd.js",
   "module": "./dist/index.module.js",
-	"types": "./dist/types/index.d.ts",
+  "types": "./dist/types/index.d.ts",
   "source": "src/index.ts",
   "exports": {
-		"types": "./dist/types/index.d.ts",
+    "types": "./dist/types/index.d.ts",
     "import": "./dist/index.module.js",
     "browser": "./dist/browser.umd.js",
     "require": "./dist/index.umd.js",
@@ -20,11 +20,11 @@
     "dist"
   ],
   "scripts": {
-    "build:node": "microbundle src/index.ts --target node --format esm && microbundle src/index.ts --target node --format umd --external tinymce",
-    "build:browser": "microbundle src/index.ts --target web --format umd,modern --output dist/browser.js --external tinymce",
-    "build": "npm run build:node && npm run build:browser",
-		"release": "npm run build && np"
-	},
+    "build:node": "rollup --config --configTarget node",
+    "build:browser": "rollup --config --configTarget browser",
+    "build": "rollup --config",
+    "release": "npm run build && npm publish"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/openregion/tinymce-word-paste-plugin.git"
@@ -41,9 +41,11 @@
   },
   "homepage": "https://github.com/openregion/tinymce-word-paste-plugin#readme",
   "devDependencies": {
-    "microbundle": "^0.15.1",
-		"np": "^8.0.4",
-		"tinymce": "^6.2.0 || ^7.0.0",
-    "typescript": "^5.1.6"
+    "@rollup/plugin-terser": "^1.0.0",
+    "@rollup/plugin-typescript": "^12.3.0",
+    "rollup": "^4.63.6",
+    "tinymce": "^6.2.0 || ^7 || ^8",
+    "tslib": "^2.8.1",
+    "typescript": "^6.0.3"
   }
 }
