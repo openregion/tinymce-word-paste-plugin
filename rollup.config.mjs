@@ -16,7 +16,7 @@ const createBuild = (target, output) => ({
 
 // Preserve microbundle's Node 12 syntax target.
 const nodeBuild = createBuild('ES2019', [
-  { file: 'dist/index.module.js', format: 'es' },
+  { file: 'dist/index.module.mjs', format: 'es' },
   { file: 'dist/index.umd.js', format: 'umd' },
 ]);
 
@@ -30,7 +30,7 @@ const browserBuilds = [
   ]),
   createBuild('ES2017', [
     {
-      file: 'dist/browser.module.js',
+      file: 'dist/browser.module.mjs',
       format: 'es',
       plugins: [terser({ ecma: 2017, module: true })],
     },
