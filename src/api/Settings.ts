@@ -14,10 +14,10 @@
  * @see https://www.tiny.cloud/docs/tinymce/6/copy-and-paste/
  */
 
-import type { Editor } from 'tinymce';
+import type { Editor } from '../Editor';
 
 const getRetainStyleProps = (editor: Editor): string | undefined =>
-  editor.getParam('paste_retain_style_properties');
+  editor.getParam<string | undefined>('paste_retain_style_properties', undefined);
 
 const getWordValidElements = (editor: Editor): string => {
   const defaultValidElements = (
@@ -35,8 +35,8 @@ const shouldConvertWordFakeLists = (editor: Editor): boolean =>
 const shouldUseDefaultFilters = (editor: Editor): boolean =>
   editor.getParam('paste_enable_default_filters', true);
 
-const getValidate = (editor: Editor): boolean | undefined =>
-  editor.getParam('validate') ?? true;
+const getValidate = (editor: Editor): boolean =>
+  editor.getParam<boolean | undefined>('validate', undefined) ?? true;
 
 export {
   getRetainStyleProps,

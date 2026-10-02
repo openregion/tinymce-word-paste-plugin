@@ -4,12 +4,12 @@
  * For LGPL see License.txt in the project root for license information.
  * For commercial licenses see https://www.tiny.cloud/
  */
+import type { EditorManager } from '../Editor';
+
 /**
  * Based on TinyMCE 5.10.7 paste plugin
  * @see https://github.com/tinymce/tinymce/blob/5.10.7/modules/tinymce/src/plugins/paste/main/ts/core/Utils.ts
  */
-
-const { Tools } = tinymce.util;
 
 type RegExpFilter =
   | RegExp
@@ -24,7 +24,9 @@ const isRegExp = (val: object): val is RegExp => val.constructor === RegExp;
  * @class tinymce.pasteplugin.Utils
  */
 
-const filter = (content: string, items: RegExpFilter[]): string => {
+const filter = (editorManager: EditorManager, content: string, items: RegExpFilter[]): string => {
+  const { Tools } = editorManager.util;
+
   Tools.each(items, (v) => {
     if (isRegExp(v)) {
       content = content.replace(v, '');

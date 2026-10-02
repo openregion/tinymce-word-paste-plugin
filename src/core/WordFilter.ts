@@ -9,22 +9,27 @@
  * @see https://github.com/tinymce/tinymce/blob/5.10.7/modules/tinymce/src/plugins/paste/main/ts/core/WordFilter.ts
  */
 
-import type { AstNode as AstNodeType, Editor } from 'tinymce';
+import type {
+  AstNode as AstNodeType,
+  Editor,
+  EditorManager,
+} from '../Editor';
 
 import * as Settings from '../api/Settings';
 import * as Utils from './Utils';
 
-const nbsp = '\u00A0';
-const AstNode = tinymce.html.Node;
-const { Tools } = tinymce.util;
-const { DomParser } = tinymce.html;
-const { Schema } = tinymce.html;
-const HtmlSerializer = tinymce.html.Serializer;
+type HtmlFactories = {
+  [K in 'Schema' | 'DomParser' | 'Serializer']: (
+    ...args: Parameters<EditorManager['html'][K]>
+  ) => ReturnType<EditorManager['html'][K]>;
+};
 
-interface WordAstNode extends AstNodeType {
+const nbsp = '\u00A0';
+
+type WordAstNode = AstNodeType & {
   _listLevel?: number;
   _listIgnore?: boolean;
-}
+};
 
 /**
  * This class parses word HTML into proper TinyMCE markup.
@@ -45,7 +50,8 @@ const isWordContent = (content: string): boolean => (
 /**
  * Checks if the specified text starts with "1. " or "a. " etc.
  */
-const isNumericList = (text: string): boolean => {
+const isNumericList = (editorManager: EditorManager, text: string): boolean => {
+  const { Tools } = editorManager.util;
   let found = false;
 
   const patterns = [
@@ -80,7 +86,8 @@ const isBulletList = (text: string): boolean =>
  *
  * @param {tinymce.html.Node} node Root node to convert children of.
  */
-const convertFakeListsToProperLists = (node: WordAstNode) => {
+const convertFakeListsToProperLists = (editorManager: EditorManager, node: WordAstNode) => {
+  const AstNode = editorManager.html.Node;
   let currentListNode: WordAstNode | null = null;
   let prevListNode: WordAstNode | null;
   let lastLevel = 1;
@@ -208,7 +215,7 @@ const convertFakeListsToProperLists = (node: WordAstNode) => {
       }
 
       // Detect ordered lists 1., a. or ixv.
-      if (isNumericList(nodeText)) {
+      if (isNumericList(editorManager, nodeText)) {
         // Parse OL start number
         const matches = /([0-9]+)\./.exec(nodeText);
         let start = 1;
@@ -238,7 +245,9 @@ const convertFakeListsToProperLists = (node: WordAstNode) => {
   }
 };
 
-const filterStyles = (editor: Editor, validStyles: Record<string, Record<string, never>> | undefined, node: WordAstNode, styleValue: string): string | null => {
+const filterStyles = (editorManager: EditorManager, editor: Editor, validStyles: Record<string, Record<string, never>> | undefined, node: WordAstNode, styleValue: string): string | null => {
+  const AstNode = editorManager.html.Node;
+  const { Tools } = editorManager.util;
   const outputStyles: Record<string, string> = {};
   const styles = editor.dom.parseStyle(styleValue);
 
@@ -336,7 +345,10 @@ const filterStyles = (editor: Editor, validStyles: Record<string, Record<string,
   return null;
 };
 
-const filterWordContent = (editor: Editor, content: string): string => {
+const filterWordContent = (editorManager: EditorManager, editor: Editor, content: string): string => {
+  const { Tools } = editorManager.util;
+  // The schema, parser and serializer always come from the same editor API.
+  const { DomParser, Schema, Serializer: HtmlSerializer } = editorManager.html as HtmlFactories;
   let validStyles: Record<string, Record<string, never>>;
 
   const retainStyleProperties = Settings.getRetainStyleProps(editor);
@@ -346,7 +358,7 @@ const filterWordContent = (editor: Editor, content: string): string => {
   }
 
   // Remove basic Word junk
-  content = Utils.filter(content, [
+  content = Utils.filter(editorManager, content, [
     // Remove apple new line markers
     /<br class="?Apple-interchange-newline"?>/gi,
 
@@ -406,7 +418,7 @@ const filterWordContent = (editor: Editor, content: string): string => {
 
     while (i--) {
       node = nodes[i];
-      node.attr('style', filterStyles(editor, validStyles, node, node.attr('style') || ''));
+      node.attr('style', filterStyles(editorManager, editor, validStyles, node, node.attr('style') || ''));
 
       // Remove pointless spans
       if (node.name === 'span' && node.parent && !node.attributes?.length) {
@@ -486,7 +498,7 @@ const filterWordContent = (editor: Editor, content: string): string => {
 
   // Process DOM
   if (Settings.shouldConvertWordFakeLists(editor)) {
-    convertFakeListsToProperLists(rootNode);
+    convertFakeListsToProperLists(editorManager, rootNode);
   }
 
   // Serialize DOM back to HTML
@@ -497,7 +509,7 @@ const filterWordContent = (editor: Editor, content: string): string => {
   return content;
 };
 
-const preProcess = (editor: Editor, content: string): string => (Settings.shouldUseDefaultFilters(editor) ? filterWordContent(editor, content) : content);
+const preProcess = (editorManager: EditorManager, editor: Editor, content: string): string => (Settings.shouldUseDefaultFilters(editor) ? filterWordContent(editorManager, editor, content) : content);
 
 export {
   preProcess,
