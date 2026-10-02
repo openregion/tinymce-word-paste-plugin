@@ -1,7 +1,8 @@
+import type { Editor, EditorManager } from './Editor';
 import { isWordContent, preProcess } from './core/WordFilter';
 
-export default (): void => {
-  tinymce.PluginManager.add('pasteword', (editor) => {
+const register = (editorManager: EditorManager): void => {
+  editorManager.PluginManager.add('pasteword', (editor: Editor) => {
     let isRemoveStylesIfWebkit: boolean;
 
     editor.on('PastePreProcess', (event) => {
@@ -10,7 +11,7 @@ export default (): void => {
       isRemoveStylesIfWebkit = options.get('paste_remove_styles_if_webkit') ?? true;
 
       if (isWordContent(content)) {
-        event.content = preProcess(editor, content);
+        event.content = preProcess(editorManager, editor, content);
 
         if (isRemoveStylesIfWebkit) {
           /**
@@ -38,4 +39,18 @@ export default (): void => {
       }),
     };
   });
-}
+};
+
+export default (): void => {
+  if (typeof tinymce === 'undefined' && typeof hugerte === 'undefined') {
+    throw new Error('Load TinyMCE or HugeRTE before the pasteword plugin.');
+  }
+
+  if (typeof tinymce !== 'undefined') {
+    register(tinymce);
+  }
+
+  if (typeof hugerte !== 'undefined') {
+    register(hugerte);
+  }
+};

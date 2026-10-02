@@ -3,7 +3,7 @@ import typescript from '@rollup/plugin-typescript';
 
 const createBuild = (target, output) => ({
   input: 'src/index.ts',
-  external: ['tinymce'],
+  external: ['tinymce', 'hugerte'],
   plugins: [
     typescript({
       target,

@@ -1,7 +1,7 @@
 {
   "name": "@openregion/tinymce-word-paste-plugin",
   "version": "1.0.4",
-  "description": "TinyMCE plugin to paste from Word",
+  "description": "TinyMCE and HugeRTE plugin to paste from Word",
   "type": "commonjs",
   "main": "./dist/index.umd.js",
   "umd:main": "./dist/index.umd.js",
@@ -36,6 +36,7 @@
   },
   "keywords": [
     "tinymce",
+    "hugerte",
     "plugin",
     "paste",
     "word"
@@ -45,11 +46,24 @@
     "url": "https://github.com/openregion/tinymce-word-paste-plugin/issues"
   },
   "homepage": "https://github.com/openregion/tinymce-word-paste-plugin#readme",
+  "peerDependencies": {
+    "hugerte": "^1",
+    "tinymce": "^6.2.0 || ^7 || ^8"
+  },
+  "peerDependenciesMeta": {
+    "tinymce": {
+      "optional": true
+    },
+    "hugerte": {
+      "optional": true
+    }
+  },
   "devDependencies": {
     "@rollup/plugin-terser": "^1.0.0",
     "@rollup/plugin-typescript": "^12.3.0",
+    "hugerte": "^1.0.14",
     "rollup": "^4.63.6",
-    "tinymce": "^6.2.0 || ^7 || ^8",
+    "tinymce": "^8.9.2",
     "tslib": "^2.8.1",
     "typescript": "^6.0.3"
   }
